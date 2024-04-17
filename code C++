@@ -1,0 +1,29 @@
+#include <Arduino.h>
+const int dist_trigPin=2;
+const int dist_echoPin=3;
+ long duration;
+ int distanceCm, distanceInch;
+ //----------------------------
+ void setup() {
+    Serial.begin(9600);
+    //sensor de distancia
+    pinMode(dist_trigPin, OUTPUT);
+    pinMode(dist_echoPin, INPUT);
+    pinMode(7,OUTPUT);
+    }
+void loop(){
+  digitalWrite(dist_trigPin,LOW);
+  delayMicroseconds(2);
+  digitalWrite(dist_trigPin,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(dist_trigPin,LOW);
+  duration=pulseIn(dist_echoPin,HIGH);
+  distanceCm=duration*0.034/2;
+  distanceInch=duration*0.0133/2;
+  Serial.println(distanceCm);
+  if (distanceCm < 10){
+    digitalWrite(7, HIGH);
+  }
+  else {
+    digitalWrite(7, LOW);
+  }
